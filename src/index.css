@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vt-green: #00ff41;
+  --vt-green-dim: #00aa2a;
+  --vt-green-glow: #00ff4133;
+  --vt-amber: #ffb000;
+  --vt-amber-dim: #cc8d00;
+  --vt-red: #ff4444;
+  --vt-red-glow: #ff444433;
+  --vt-blue-ice: #44ccff;
+  --vt-bg-dark: #0a0a0a;
+  --vt-bg-panel: #0d1a0d;
+  --vt-bg-card: #111a11;
+  --vt-border: #00ff4144;
+  --vt-text-dim: #00aa2a88;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.05em;
+  background: var(--vt-bg-dark);
+  color: var(--vt-green);
+  overflow-x: hidden;
+}
+
+/* Scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Phosphor glow on green text */
+.text-vt-green {
+  color: var(--vt-green);
+  text-shadow: 0 0 8px var(--vt-green);
+}
+
+.text-vt-amber {
+  color: var(--vt-amber);
+  text-shadow: 0 0 8px var(--vt-amber);
+}
+
+.text-vt-red {
+  color: var(--vt-red);
+  text-shadow: 0 0 8px var(--vt-red);
+}
+
+/* CRT flicker animation */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.97; }
+  75% { opacity: 0.99; }
+}
+
+.crt-flicker {
+  animation: flicker 0.15s infinite;
+}
+
+/* Screen curvature */
+.crt-screen {
+  perspective: 1000px;
+}
+
+.crt-content {
+  transform: rotateX(0.5deg);
+}
+
+/* Vignette effect */
+.vignette {
+  position: relative;
+}
+
+.vignette::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glitch transition */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.glitch {
+  animation: glitch 0.2s;
+}
+
+/* Typewriter effect */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  background: var(--vt-green);
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+/* Card glow effect */
+.card-glow {
+  border: 1px solid var(--vt-border);
+  box-shadow: 0 0 10px var(--vt-green-glow);
+  transition: all 0.3s ease;
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 20px var(--vt-green-glow);
+  transform: scale(1.01);
+}
+
+/* Status indicators */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.status-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes blink-status {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.3; }
+}
+
+.status-blink {
+  animation: blink-status 1s infinite;
+}
+
+/* Ice crystal effect for frozen */
+.frozen-overlay {
+  position: relative;
+}
+
+.frozen-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 40%, var(--vt-blue-ice) 40%, var(--vt-blue-ice) 42%, transparent 42%, transparent 58%, var(--vt-blue-ice) 58%, var(--vt-blue-ice) 60%, transparent 60%);
+  opacity: 0.1;
+  pointer-events: none;
+}
